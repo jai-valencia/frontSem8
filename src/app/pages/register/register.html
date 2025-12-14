@@ -1,0 +1,130 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+      <div class="card shadow">
+        <div class="card-body p-5">
+          <h2 class="text-center mb-4">Crear Cuenta</h2>
+          
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            
+            <!-- Username -->
+            <div class="mb-3">
+              <label for="username" class="form-label">Nombre de Usuario</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="username" 
+                formControlName="username"
+                [class.is-invalid]="submitted && f['username'].errors">
+              <div class="invalid-feedback" *ngIf="submitted && f['username'].errors">
+                <div *ngIf="f['username'].errors['required']">El nombre de usuario es requerido</div>
+                <div *ngIf="f['username'].errors['minlength']">Debe tener al menos 3 caracteres</div>
+                <div *ngIf="f['username'].errors['maxlength']">No puede exceder 20 caracteres</div>
+                <div *ngIf="f['username'].errors['pattern']">Solo letras, números, guiones y guiones bajos</div>
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input 
+                type="email" 
+                class="form-control" 
+                id="email" 
+                formControlName="email"
+                [class.is-invalid]="submitted && f['email'].errors">
+              <div class="invalid-feedback" *ngIf="submitted && f['email'].errors">
+                <div *ngIf="f['email'].errors['required']">El email es requerido</div>
+                <div *ngIf="f['email'].errors['email'] || f['email'].errors['pattern']">
+                  Ingrese un email válido
+                </div>
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+              <label for="password" class="form-label">Contraseña</label>
+              <div class="input-group">
+                <input 
+                  [type]="showPassword ? 'text' : 'password'" 
+                  class="form-control" 
+                  id="password" 
+                  formControlName="password"
+                  [class.is-invalid]="submitted && f['password'].errors">
+                <button 
+                  class="btn btn-outline-secondary" 
+                  type="button"
+                  (click)="togglePasswordVisibility()">
+                  {{ showPassword ? '👁️' : '👁️‍🗨️' }}
+                </button>
+                <div class="invalid-feedback" *ngIf="submitted && f['password'].errors">
+                  <div *ngIf="f['password'].errors['required']">La contraseña es requerida</div>
+                  <div *ngIf="f['password'].errors['minlength']">Debe tener al menos 8 caracteres</div>
+                  <div *ngIf="f['password'].errors['passwordStrength']">
+                    Debe contener mayúsculas, minúsculas, números y caracteres especiales
+                  </div>
+                </div>
+              </div>
+              <small class="text-muted">
+                Mínimo 8 caracteres, incluyendo mayúsculas, minúsculas, números y símbolos
+              </small>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+              <div class="input-group">
+                <input 
+                  [type]="showConfirmPassword ? 'text' : 'password'" 
+                  class="form-control" 
+                  id="confirmPassword" 
+                  formControlName="confirmPassword"
+                  [class.is-invalid]="submitted && (f['confirmPassword'].errors || registerForm.errors?.['passwordMismatch'])">
+                <button 
+                  class="btn btn-outline-secondary" 
+                  type="button"
+                  (click)="toggleConfirmPasswordVisibility()">
+                  {{ showConfirmPassword ? '👁️' : '👁️‍🗨️' }}
+                </button>
+                <div class="invalid-feedback" *ngIf="submitted && (f['confirmPassword'].errors || registerForm.errors?.['passwordMismatch'])">
+                  <div *ngIf="f['confirmPassword'].errors?.['required']">Debe confirmar su contraseña</div>
+                  <div *ngIf="registerForm.errors?.['passwordMismatch']">Las contraseñas no coinciden</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Terms and Conditions -->
+            <div class="mb-3 form-check">
+              <input 
+                type="checkbox" 
+                class="form-check-input" 
+                id="termsAccepted" 
+                formControlName="termsAccepted"
+                [class.is-invalid]="submitted && f['termsAccepted'].errors">
+              <label class="form-check-label" for="termsAccepted">
+                Acepto los <a href="#" class="text-decoration-none">términos y condiciones</a>
+              </label>
+              <div class="invalid-feedback" *ngIf="submitted && f['termsAccepted'].errors">
+                Debe aceptar los términos y condiciones
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button 
+              type="submit" 
+              class="btn btn-primary w-100 mb-3">
+              Registrarse
+            </button>
+
+            <!-- Link to Login -->
+            <div class="text-center">
+              <p class="mb-0">¿Ya tienes una cuenta? 
+                <a routerLink="/login" class="text-decoration-none">Inicia sesión aquí</a>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

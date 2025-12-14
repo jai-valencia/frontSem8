@@ -1,0 +1,9 @@
+<div class="container mt-4">
+  <h3>Laboratorios</h3>
+  <ul class="list-group mt-3">
+    <li *ngFor="let l of labs" class="list-group-item d-flex justify-content-between">
+      <span>{{ l.nombre }}</span>
+      <span class="badge bg-primary">{{ l.estado }}</span>
+    </li>
+  </ul>
+</div>
