@@ -12,7 +12,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  error: string = '';
+  errorMessage: string = ''; // Usaremos solo esta para los mensajes de error
 
   constructor(
     private fb: FormBuilder,
@@ -20,21 +20,25 @@ export class LoginComponent {
     private router: Router
   ) {
     this.loginForm = this.fb.group({
-      // Si tu backend usa 'email', asegúrate que el DTO en Java también lo reciba así
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
   }
 
-  onLogin() {
+  // ESTE ES EL MÉTODO ÚNICO QUE SOLUCIONA EL ERROR
+  onSubmit(): void {
     if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value).subscribe({
-        next: () => {
-          this.router.navigate(['/listado']);
+      // Tomamos el valor del formulario (que ya es un objeto {email, password})
+      const credentials = this.loginForm.value;
+
+      this.authService.login(credentials).subscribe({
+        next: (res) => {
+          console.log('Login exitoso', res);
+          this.router.navigate(['/dashboard']); // Ajusta a tu ruta (dashboard o listado)
         },
         error: (err) => {
-          console.error(err);
-          this.error = 'Credenciales incorrectas o error de conexión';
+          console.error('Error en login', err);
+          this.errorMessage = 'Usuario o contraseña incorrectos';
         }
       });
     }
