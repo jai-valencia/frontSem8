@@ -1,17 +1,16 @@
 import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service'; // Verifica que la ruta sea correcta
+import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-login-page',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterModule],
-  templateUrl: './login.html',
+  imports: [CommonModule, FormsModule],
+  templateUrl: './login.html'
 })
 export class LoginComponent {
-
   username = '';
   password = '';
   errorMessage = '';
@@ -19,13 +18,14 @@ export class LoginComponent {
   constructor(private auth: AuthService, private router: Router) {}
 
   onLogin() {
-    const ok = this.auth.login(this.username, this.password);
-
-    if (!ok) {
-      this.errorMessage = 'Usuario o contraseña incorrectos';
-      return;
-    }
-
-    this.router.navigate(['/usuarios']);
+    this.auth.login({ email: this.username, password: this.password }).subscribe({
+      next: () => {
+        this.router.navigate(['/listado']);
+      },
+      error: (err: any) => {
+        this.errorMessage = 'Credenciales inválidas o error de conexión'; // <--- Usar el nuevo nombre
+        console.error(err);
+      }
+    });
   }
 }
