@@ -1,11 +1,13 @@
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * Delete the template below * * * * * * * * * -->
-<!-- * * * * * * * to get started with your project! * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+  <div class="container">
+    <a class="navbar-brand" href="#">LabSystem</a>
+    <div class="navbar-nav">
+      <a class="nav-link" routerLink="/listado" routerLinkActive="active">Historial de Órdenes</a>
+      <a class="nav-link" routerLink="/nueva-orden" routerLinkActive="active">Ingresar Examen</a>
+    </div>
+  </div>
+</nav>
 
-
-<router-outlet />
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
